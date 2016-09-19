@@ -36,12 +36,32 @@ int binomialCoeffDP(int n, int k)
     return C[n][k];
 }
 
+int binomialCoeffSpaceOptimised(int n,int k)
+{
+    int C[k+1];
+    for(int i=0;i<=k;i++)
+        C[i] = 0;
+    
+    C[0] = 1;
+
+    for(int i=0;i<=n;i++)
+    {
+        //compute next row of pascal triangle using 
+        //the previous row
+        for(int j=min(i,k);j>0;j--)
+            C[j] = C[j] + C[j-1];
+    }
+    return C[k];
+}
+
+
 
 int main()
 {
     int n=5,k=2;
     cout << "\nValue of binomialCoeff for n=5 and k=2 is - " << binomialCoeff(n,k)<<endl;
     cout << "\nValue of binomialCoeff using DP for n=5 and k=2 is - " << binomialCoeffDP(n,k)<<endl;
+    cout << "\nValue of binomialCoeff using DP and space optmization for n=5 and k=2 is - " << binomialCoeffSpaceOptimised(n,k)<<endl;
 
     return 0;
 }
